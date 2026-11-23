@@ -1,6 +1,7 @@
 package GameLoop;
 import Units.Team;
 
+import javax.xml.namespace.QName;
 import java.util.ArrayList;
 
 public class Game {
@@ -36,6 +37,7 @@ public class Game {
     public Team getWinner() {
         return winner;
     }
+
 }
 
 

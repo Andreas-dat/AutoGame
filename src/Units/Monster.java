@@ -25,7 +25,7 @@ public class Monster {
     }
 
     public int getHp() {
-        return currentHp;
+        return maxHp;
     }
 
     public int getDamage() {
@@ -65,4 +65,7 @@ public class Monster {
         this.currentHp = maxHp;
     }
 
+    public int getCurrentHp() {
+        return currentHp;
+    }
 }
