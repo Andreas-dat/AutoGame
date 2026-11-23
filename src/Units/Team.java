@@ -12,6 +12,7 @@ public class Team {
 
     public Team(String name) {
         this.name = name;
+        this.hp = 100;
     }
 
 
@@ -21,5 +22,14 @@ public class Team {
 
     public void setCurrentMonster(Monster monster) {
         currentMonster = monster;
+    }
+
+    public void loseRound(int amount) {
+        hp -= amount;
+
+    }
+
+    public int getHp() {
+        return hp;
     }
 }

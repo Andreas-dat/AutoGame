@@ -4,7 +4,8 @@ import java.util.Random;
 
 public class Monster {
     private String name;
-    private int hp;
+    private int maxHp;
+    private int currentHp;
     private int damage;
     private int crit;
     private int speed;
@@ -14,7 +15,8 @@ public class Monster {
         this.name = name;
         this.crit = crit;
         this.damage = damage;
-        this.hp = hp;
+        this.maxHp = hp;
+        this.currentHp = hp;
         this.speed = speed;
     }
 
@@ -23,7 +25,7 @@ public class Monster {
     }
 
     public int getHp() {
-        return hp;
+        return currentHp;
     }
 
     public int getDamage() {
@@ -46,8 +48,9 @@ public class Monster {
         }
         return damage;
     }
+
     public boolean hasWonVs(Monster b) {
-        if (b.hp <= 0) {
+        if (b.currentHp <= 0) {
             return true;
         }
         return false;
@@ -55,7 +58,11 @@ public class Monster {
 
     public void attack(Monster monster, int damage) {
         System.out.println(this.getName() + " delt " + damage + " to " + monster.getName());
-        monster.hp -= damage;
+        monster.currentHp -= damage;
+    }
+
+    public void fullHeal() {
+        this.currentHp = maxHp;
     }
 
 }
