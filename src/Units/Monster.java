@@ -1,5 +1,8 @@
 package Units;
 
+import Item.Amor;
+import Item.Weapon;
+
 import java.util.Random;
 
 public class Monster {
@@ -10,6 +13,9 @@ public class Monster {
     private int crit;
     private int speed;
 
+    private Amor amor;
+    private Weapon weapon;
+
 
     public Monster(String name, int crit, int damage, int hp, int speed) {
         this.name = name;
@@ -18,6 +24,8 @@ public class Monster {
         this.maxHp = hp;
         this.currentHp = hp;
         this.speed = speed;
+        this.amor = new Amor("BareChest", "This is your bare chest", 0);
+        this.weapon = new Weapon("BareHands", "Litteraly just your bare hands", 0, 10000);
     }
 
     public String getName() {
@@ -42,11 +50,16 @@ public class Monster {
 
     public int dealDmg(Long seed) {
         Random random = new Random(seed);
+
         int roll = random.nextInt(10) + 1;
         if(crit >= roll) {
-            return damage *2;
+            return damage + totalItemDamage() *2;
         }
-        return damage;
+        return damage + totalItemDamage();
+    }
+
+    public int totalItemDamage() {
+        return weapon.getAttack();
     }
 
     public boolean hasWonVs(Monster b) {
@@ -56,9 +69,11 @@ public class Monster {
         return false;
     }
 
-    public void attack(Monster monster, int damage) {
-        System.out.println(this.getName() + " delt " + damage + " to " + monster.getName());
-        monster.currentHp -= damage;
+    public void attack(Monster targetMonster, int damage) {
+        int defense = targetMonster.totalDefense();
+        System.out.println(this.getName() + " delt " + damage + " to " + targetMonster.getName());
+        System.out.println("Their ammor took " + defense + " of the Damage");
+        targetMonster.currentHp -= damage - defense;
     }
 
     public void fullHeal() {
@@ -67,5 +82,17 @@ public class Monster {
 
     public int getCurrentHp() {
         return currentHp;
+    }
+
+    public Amor getAmor() {
+        return amor;
+    }
+
+    public int totalDefense() {
+        return amor.getDefense();
+    }
+
+    public void setAmor(Amor amor) {
+        this.amor = amor;
     }
 }
