@@ -6,6 +6,8 @@ public class Jewlery {
     private int critChance;
     private int dodgeChance;
     private int heal;
+    private int ID;
+    private static int IDCount = 0;
 
 
     public Jewlery(String name, String description, int critChance, int dodgeChance, int heal) {
@@ -14,5 +16,15 @@ public class Jewlery {
         this.critChance = critChance;
         this.dodgeChance = dodgeChance;
         this.heal = heal;
+        this.ID = IDCount;
+        IDCount++;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public int getCritChance() {
+        return critChance;
     }
 }

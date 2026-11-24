@@ -1,9 +1,13 @@
 package Units;
-
 import Item.Amor;
+import Item.Jewlery;
 import Item.Weapon;
+import Util.Text;
 
 import java.util.Random;
+
+//TODO: Stats should be calculated when amor is set not every attack
+
 
 public class Monster {
     private String name;
@@ -15,6 +19,7 @@ public class Monster {
 
     private Amor amor;
     private Weapon weapon;
+    private Jewlery jewlery;
 
 
     public Monster(String name, int crit, int damage, int hp, int speed) {
@@ -26,6 +31,7 @@ public class Monster {
         this.speed = speed;
         this.amor = new Amor("BareChest", "This is your bare chest", 0);
         this.weapon = new Weapon("BareHands", "Litteraly just your bare hands", 0, 10000);
+        this.jewlery = new Jewlery("Family jewel", "does nothing", 0,0,0);
     }
 
     public String getName() {
@@ -50,16 +56,22 @@ public class Monster {
 
     public int dealDmg(Long seed) {
         Random random = new Random(seed);
+        int crit = calculateTotalCrit();
+        int damage = calculateTotalDamage();
 
         int roll = random.nextInt(10) + 1;
         if(crit >= roll) {
-            return damage + totalItemDamage() *2;
+            return damage * 2;
         }
-        return damage + totalItemDamage();
+        return damage;
     }
 
-    public int totalItemDamage() {
-        return weapon.getAttack();
+    public int calculateTotalCrit() {
+        return jewlery.getCritChance() + crit;
+    }
+
+    public int calculateTotalDamage() {
+        return weapon.getAttack() + this.damage;
     }
 
     public boolean hasWonVs(Monster b) {
@@ -70,9 +82,9 @@ public class Monster {
     }
 
     public void attack(Monster targetMonster, int damage) {
-        int defense = targetMonster.totalDefense();
-        System.out.println(this.getName() + " delt " + damage + " to " + targetMonster.getName());
-        System.out.println("Their ammor took " + defense + " of the Damage");
+        int defense = targetMonster.calculateTotalDefense();
+        Text.attackMsg(this,targetMonster,damage);
+
         targetMonster.currentHp -= damage - defense;
     }
 
@@ -88,11 +100,15 @@ public class Monster {
         return amor;
     }
 
-    public int totalDefense() {
+    public int calculateTotalDefense() {
         return amor.getDefense();
     }
 
     public void setAmor(Amor amor) {
         this.amor = amor;
+    }
+
+    public void setWeapon(Weapon weapon) {
+        this.weapon = weapon;
     }
 }
