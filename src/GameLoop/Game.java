@@ -1,7 +1,6 @@
 package GameLoop;
 import Units.Team;
 
-import javax.xml.namespace.QName;
 import java.util.ArrayList;
 
 public class Game {
@@ -38,6 +37,9 @@ public class Game {
         return winner;
     }
 
+    public ArrayList<Round> getRounds() {
+        return rounds;
+    }
 }
 
 

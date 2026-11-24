@@ -19,7 +19,7 @@ public class Main {
         Game g = new Game();
         Game a = g.startGame(t1,t2);
 
-;
+
 
         System.out.println(a.getWinner());
     }

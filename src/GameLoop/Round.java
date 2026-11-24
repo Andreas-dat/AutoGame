@@ -38,7 +38,7 @@ public class Round {
         Monster slow = monsterArray[1]; //REMINDER 1 = slow;
 
 
-        while (fast.getHp() > 0 && slow.getHp() > 0) {
+        while (fast.getCurrentHp() > 0 && slow.getCurrentHp() > 0) {
             Text.showStatus(fast, slow);
             turnSeed = random.nextLong();
             turnLog.add(Turn.turn(fast, slow, turnSeed, roundCount));
@@ -46,6 +46,7 @@ public class Round {
 
             if (fast.hasWonVs(slow)) {
                 winner = fast;
+                continue;
             }
             turnSeed = random.nextLong();
             turnLog.add(Turn.turn(slow, fast, turnSeed, roundCount));
@@ -65,25 +66,29 @@ public class Round {
     }
 
 
-    public Monster[] determineOrderBySpeed(Monster a, Monster b, Random random) {
+    public Monster[] determineOrderBySpeed(Monster monsterOne, Monster monsterTwo, Random random) {
         Monster[] monsterArray = new Monster[2];
-        if (a.getSpeed() > b.getSpeed()) {
-            monsterArray[0] = a;
-            monsterArray[1] = b;
+        if (monsterOne.getSpeed() > monsterTwo.getSpeed()) {
+            monsterArray[0] = monsterOne;
+            monsterArray[1] = monsterTwo;
             return monsterArray;
         }
-        if (a.getSpeed() == b.getSpeed()) {
+        if (monsterOne.getSpeed() == monsterTwo.getSpeed()) {
 
             int randomStarter = random.nextInt(2) + 1;
             if (2 == randomStarter) {
-                monsterArray[0] = a;
-                monsterArray[1] = b;
+                monsterArray[0] = monsterOne;
+                monsterArray[1] = monsterTwo;
                 return monsterArray;
             }
         }
-        monsterArray[0] = b;
-        monsterArray[1] = a;
+        monsterArray[0] = monsterTwo;
+        monsterArray[1] = monsterOne;
         return monsterArray;
+    }
+
+    public ArrayList<Turn> getTurnLog() {
+        return turnLog;
     }
 }
 

@@ -2,40 +2,53 @@ package GameLoop;
 
 import Units.Monster;
 import Units.MonsterTypes;
+import Units.Team;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class TurnTest {
-    Monster m1;
-    Monster m2;
+    Team t1;
+    Team t2;
+    Monster orc;
+    Monster human;
+    Round r;
+    Game g;
+
+
     @BeforeEach
     void setUp() {
         HashMap<Integer, Monster> monsterMap = MonsterTypes.makeMonsters();
 
-        m1 = monsterMap.get(0);
-         m2 = monsterMap.get(1);
+        t1 = new Team("Andreas");
+        t2 = new Team("Tanya");
+
+        orc = monsterMap.get(0);
+        human = monsterMap.get(1);
+
+        r = new Round();
+        g = new Game();
+
+        t1.setCurrentMonster(orc);
+        t2.setCurrentMonster(human);
 
     }
 
     @Test
     void turn() {
-        setUp();
-        int hp = m2.getHp();
-        Turn.turn(m1,m2,10L,4);
+        int hp = human.getHp();
+        Turn.turn(orc,human,10L,4);
 
-        assertNotEquals(hp,m2.getCurrentHp());
+        assertNotEquals(hp,human.getCurrentHp());
     }
-
-
     @Test
     void dmg() {
-        setUp();
-        int damage = m1.dealDmg(10L);
-        int normal = m1.getDamage() * 2;
+        int damage = orc.dealDmg(10L);
+        int normal = orc.getDamage() * 2;
 
         assertEquals(damage, normal);
     }
@@ -43,16 +56,38 @@ class TurnTest {
 
     @Test
     void takeDamage() {
+        int damage = orc.dealDmg(10L);
+        orc.attack(human, damage);
+
+        assertEquals(human.getHp() - damage, human.getCurrentHp());
+
+    }
+
+    @Test
+    void orderTest() {
+       Monster[] array = r.determineOrderBySpeed(human,orc,new Random());
+
+       assertEquals(array[0].getName(), human.getName());
+    }
+
+    @Test
+    void turnArray() {
         setUp();
+        Round q = r.fightLoop(t1,t2,10L);
 
-        int damage = m1.dealDmg(10L);
+        Game z = g.startGame(t1,t2);
 
-        m1.attack(m2, damage);
+        assertEquals(z.getRounds().getFirst().getTurnLog().size(), q.getTurnLog().size());
 
-        assertEquals(m2.getHp() - damage, m2.getCurrentHp());
+
+
+
 
 
     }
+
+
+
 
 
 }
