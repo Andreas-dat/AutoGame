@@ -16,11 +16,13 @@ public enum AmorItems {
     }
 
 
-    public HashMap<Integer, Amor> makeAmor() {
+    public static HashMap<Integer, Amor> makeAmor() {
         HashMap<Integer, Amor> amorMap = new HashMap<>();
 
+        int count = 0;
         for(AmorItems a : AmorItems.values()) {
-            amorMap.put(a.amor.getID(),a.amor);
+            amorMap.put(count,a.amor);
+            count++;
         }
         return amorMap;
 

@@ -13,12 +13,13 @@ public enum WeaponItems {
     }
 
 
-    public HashMap<Integer, Weapon> makeWeapons() {
+    public static HashMap<Integer, Weapon> makeWeapons() {
         HashMap<Integer, Weapon> weaponMap = new HashMap<>();
 
-
+        int count = 0;
         for(WeaponItems w : WeaponItems.values()) {
-            weaponMap.put(w.weapon.getID(), w.weapon);
+            weaponMap.put(count, w.weapon);
+            count++;
         }
 
         return weaponMap;

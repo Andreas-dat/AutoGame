@@ -5,7 +5,7 @@ public class Amor {
     private String description;
     private int defense;
     private int ID;
-    private static int IDcount;
+    private static int IDcount = 0;
 
     public Amor(String name, String description, int defense) {
         this.name = name;
