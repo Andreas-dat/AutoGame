@@ -50,7 +50,9 @@ public class Round {
             }
             turnSeed = random.nextLong();
             turnLog.add(Turn.turn(slow, fast, turnSeed, roundCount));
-            winner = slow;
+            if(slow.winVs(fast)) {
+                winner = slow;
+            }
         }
         return endRound(winner, teamOne, teamTwo);
     }

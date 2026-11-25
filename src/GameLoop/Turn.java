@@ -11,7 +11,7 @@ public class Turn {
     private static boolean hasCrit;
     private int turnNumber;
     private int turnID;
-    private int turnIDCount = 0;
+    private static int turnIDCount = 0;
 
     public Turn(Monster attacker, Monster defender, int damage, int health, boolean hasCrit, int turnNumber) {
         this.attacker = attacker;
