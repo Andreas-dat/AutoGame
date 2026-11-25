@@ -71,7 +71,6 @@ class TurnTest {
 
     @Test
     void turnArray() {
-        setUp();
         Round q = r.fightLoop(t1,t2,10L);
 
         Game z = g.startGame(t1,t2);
