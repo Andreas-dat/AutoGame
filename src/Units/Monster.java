@@ -1,12 +1,12 @@
 package Units;
-import Item.Amor;
+import Item.Armor;
 import Item.Jewlery;
 import Item.Weapon;
 import Util.Text;
 
 import java.util.Random;
 
-//TODO: Stats should be calculated when amor is set not every attack
+//TODO: Stats should be calculated when armor is set not every attack
 
 
 public class Monster {
@@ -18,7 +18,7 @@ public class Monster {
     private final int speed;
     private int dodge;
 
-    private Amor amor;
+    private Armor armor;
     private Weapon weapon;
     private Jewlery jewlery;
 
@@ -30,7 +30,7 @@ public class Monster {
         this.maxHp = hp;
         this.currentHp = hp;
         this.speed = speed;
-        this.amor = new Amor("BareChest", "This is your bare chest", 0);
+        this.armor = new Armor("BareChest", "This is your bare chest", 0);
         this.weapon = new Weapon("BareHands", "Litteraly just your bare hands", 0, 10000);
         this.jewlery = new Jewlery("Family jewel", "does nothing", 0,0,0);
     }
@@ -66,6 +66,10 @@ public class Monster {
         return 1;
     }
 
+    private void takeDamage(int damage) {
+        this.currentHp -= damage;
+    }
+
     public int calculateTotalCrit() {
         return jewlery.getCritChance() + crit;
     }
@@ -74,7 +78,7 @@ public class Monster {
         return weapon.getAttack() + this.damage;
     }
 
-    public boolean hasWonVs(Monster b) {
+    public boolean winVs(Monster b) {
         return b.currentHp <= 0;
     }
 
@@ -85,7 +89,8 @@ public class Monster {
             int damageToTarget = deltDamage(targetMonster, seed);
             if (damageToTarget <= 0) damageToTarget = 0;
 
-            targetMonster.currentHp -= damageToTarget;
+
+            targetMonster.takeDamage(damageToTarget);
 
             return damageToTarget;
         }
@@ -100,7 +105,7 @@ public class Monster {
     }
 
     private boolean doesTargetDodge(Monster targetMonster, Long seed) {
-        Random random = new Random(seed + 1); //This is to make sure the random numbers arent the same for crit and doge
+        Random random = new Random(seed + 1); //This is to make sure the random numbers arent the same for crit and dodge
         int roll = random.nextInt(10) + 1;
         return targetMonster.calculateTotalDodge() >= roll;
 
@@ -114,20 +119,20 @@ public class Monster {
         return currentHp;
     }
 
-    public Amor getAmor() {
-        return amor;
+    public Armor getAmor() {
+        return armor;
     }
 
     public int calculateTotalDefense() {
-        return amor.getDefense();
+        return armor.getDefense();
     }
 
     public int calculateTotalDodge() { //TODO: Further changes will be made to the dodge mecanic.
         return jewlery.getDodgeChance();
     }
 
-    public void setAmor(Amor amor) {
-        this.amor = amor;
+    public void setAmor(Armor armor) {
+        this.armor = armor;
     }
 
     public void setWeapon(Weapon weapon) {

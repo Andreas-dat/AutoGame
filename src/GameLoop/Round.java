@@ -44,7 +44,7 @@ public class Round {
             turnLog.add(Turn.turn(fast, slow, turnSeed, roundCount));
             roundCount++;
 
-            if (fast.hasWonVs(slow)) {
+            if (fast.winVs(slow)) {
                 winner = fast;
                 continue;
             }

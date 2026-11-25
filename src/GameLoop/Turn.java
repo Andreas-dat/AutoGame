@@ -30,7 +30,7 @@ public class Turn {
         Text.combatText(attacker, defender);
         int damageDone = attacker.attack(defender, turnSeed);
 
-        if(attacker.didMonsterCrit(turnSeed) > 1) {
+        if(damageDone > attacker.calculateTotalDamage()) {
             hasCrit = true;
         }
         return new Turn(attacker,defender,damageDone,defender.getMaxHp(), hasCrit, turnNumber);

@@ -13,7 +13,7 @@ class MonsterTest {
             Team t2;
             Monster orc;
             Monster human;
-            HashMap<Integer, Amor> amorMap;
+            HashMap<Integer, Armor> amorMap;
             HashMap<Integer, Weapon> weaponMap;
             HashMap<Integer, Jewlery> jewleryMap;
 
@@ -21,7 +21,7 @@ class MonsterTest {
             @BeforeEach
             void setUp() {
                 HashMap<Integer, Monster> monsterMap = MonsterTypes.makeMonsters();
-                amorMap = AmorItems.makeAmor();
+                amorMap = ArmorItems.makeAmor();
                 weaponMap = WeaponItems.makeWeapons();
                 jewleryMap = JewleryItems.makeJewlery();
 

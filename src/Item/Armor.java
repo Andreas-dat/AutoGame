@@ -1,13 +1,13 @@
 package Item;
 
-public class Amor {
+public class Armor {
     private String name;
     private String description;
     private int defense;
     private int ID;
     private static int IDcount = 0;
 
-    public Amor(String name, String description, int defense) {
+    public Armor(String name, String description, int defense) {
         this.name = name;
         this.description = description;
         this.defense = defense;
