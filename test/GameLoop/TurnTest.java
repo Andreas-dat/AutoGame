@@ -57,7 +57,7 @@ class TurnTest {
     @Test
     void takeDamage() {
         int damage = orc.dealDmg(10L);
-        orc.attack(human, damage);
+        orc.attack(human, damage,10L);
 
         assertEquals(human.getHp() - damage, human.getCurrentHp());
 

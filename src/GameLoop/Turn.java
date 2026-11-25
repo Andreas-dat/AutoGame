@@ -31,7 +31,7 @@ public class Turn {
     protected static Turn turn(Monster attacker, Monster defender, Long turnSeed, int turnNumber) {
         Text.combatText(attacker, defender);
         int damage = attacker.dealDmg(turnSeed);
-        attacker.attack(defender, damage);
+        attacker.attack(defender, damage,turnSeed);
         if(damage > attacker.getDamage()) {
             hasCrit = true;
         }

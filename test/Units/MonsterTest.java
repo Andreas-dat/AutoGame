@@ -1,9 +1,6 @@
 package Units;
 
-import Item.Amor;
-import Item.AmorItems;
-import Item.Weapon;
-import Item.WeaponItems;
+import Item.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,6 +15,7 @@ class MonsterTest {
             Monster human;
             HashMap<Integer, Amor> amorMap;
             HashMap<Integer, Weapon> weaponMap;
+            HashMap<Integer, Jewlery> jewleryMap;
 
 
             @BeforeEach
@@ -25,6 +23,7 @@ class MonsterTest {
                 HashMap<Integer, Monster> monsterMap = MonsterTypes.makeMonsters();
                 amorMap = AmorItems.makeAmor();
                 weaponMap = WeaponItems.makeWeapons();
+                jewleryMap = JewleryItems.makeJewlery();
 
                 t1 = new Team("Andreas");
                 t2 = new Team("Tanya");
@@ -55,8 +54,31 @@ class MonsterTest {
                 int damageActual = orc.getDamage() + weaponMap.get(0).getAttack();
 
                 assertEquals(damageExpected, damageActual);
+            }
+
+            @Test
+            void critCalculations() {
+                orc.setJewlery(jewleryMap.get(0));
+
+                int expectedCritChance = orc.getCrit() + jewleryMap.get(0).getCritChance();
+                int actualCritChance = orc.calculateTotalCrit();
+
+                assertEquals(expectedCritChance, actualCritChance);
 
             }
+
+            @Test
+            void dodgeCalculations() {
+                orc.setJewlery(jewleryMap.get(1));
+                int expectedHealth = orc.getHp();
+                int damage = human.dealDmg(10L);
+                human.attack(orc,damage,10L);
+                int actualHealth = orc.getHp();
+
+                assertEquals(expectedHealth, actualHealth);
+
+            }
+
         }
 
 

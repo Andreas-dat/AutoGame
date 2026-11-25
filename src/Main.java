@@ -16,6 +16,7 @@ public class Main {
         Team t2 = new Team("Tanya");
         t2.setCurrentMonster(map.get(1));
 
+
         Game g = new Game();
         Game a = g.startGame(t1,t2);
 

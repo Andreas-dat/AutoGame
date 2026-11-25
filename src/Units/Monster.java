@@ -16,6 +16,7 @@ public class Monster {
     private int damage;
     private int crit;
     private int speed;
+    private int dodge;
 
     private Amor amor;
     private Weapon weapon;
@@ -81,11 +82,27 @@ public class Monster {
         return false;
     }
 
-    public void attack(Monster targetMonster, int damage) {
-        int defense = targetMonster.calculateTotalDefense();
-        Text.attackMsg(this,targetMonster,damage);
+    public void attack(Monster targetMonster, int damage, Long seed) {
 
-        targetMonster.currentHp -= damage - defense;
+        if(!doesTargetDodge(targetMonster, seed)) {
+            int defense = targetMonster.calculateTotalDefense();
+            Text.attackMsg(this,targetMonster,damage);
+
+            targetMonster.currentHp -= damage - defense;
+            return;
+        }
+        Text.dodgeMsg(this,targetMonster);
+
+    }
+
+    public boolean doesTargetDodge(Monster targetMonster, Long seed) {
+        Random random = new Random(seed + 1); //This is to make sure the random numbers arent the same for crit and doge
+        int roll = random.nextInt(10) + 1;
+        if(targetMonster.calculateTotalDodge() >= roll) {
+            return true;
+        }
+        return false;
+
     }
 
     public void fullHeal() {
@@ -104,11 +121,19 @@ public class Monster {
         return amor.getDefense();
     }
 
+    public int calculateTotalDodge() { //TODO: Further changes will be made to the dodge mecanic.
+        return jewlery.getDodgeChance();
+    }
+
     public void setAmor(Amor amor) {
         this.amor = amor;
     }
 
     public void setWeapon(Weapon weapon) {
         this.weapon = weapon;
+    }
+
+    public void setJewlery(Jewlery jewlery) {
+        this.jewlery = jewlery;
     }
 }

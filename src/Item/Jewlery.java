@@ -27,4 +27,8 @@ public class Jewlery {
     public int getCritChance() {
         return critChance;
     }
+
+    public int getDodgeChance() {
+        return dodgeChance;
+    }
 }
