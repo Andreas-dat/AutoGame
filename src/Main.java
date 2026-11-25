@@ -13,15 +13,17 @@ public class Main {
 
         Team t1 = new Team("Andreas");
         t1.setCurrentMonster(map.get(0));
+        Monster a = new Monster(map.get(0));
         Team t2 = new Team("Tanya");
-        t2.setCurrentMonster(map.get(1));
+        t2.setCurrentMonster(a);
 
 
         Game g = new Game();
-        Game a = g.startGame(t1,t2);
+        Game d = g.startGame(t1,t2);
 
 
 
-        System.out.println(a.getWinner());
+        System.out.println(d.getWinner());
+
     }
 }

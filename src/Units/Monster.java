@@ -17,6 +17,8 @@ public class Monster {
     private final int crit;
     private final int speed;
     private int dodge;
+    private int id;
+    private static int idCount;
 
     private Armor armor;
     private Weapon weapon;
@@ -33,6 +35,34 @@ public class Monster {
         this.armor = new Armor("BareChest", "This is your bare chest", 0);
         this.weapon = new Weapon("BareHands", "Litteraly just your bare hands", 0, 10000);
         this.jewlery = new Jewlery("Family jewel", "does nothing", 0,0,0);
+        this.id = idCount;
+        idCount++;
+    }
+
+    public Monster(Monster monster) {
+        this.name = monster.getName();
+        this.damage = monster.damage;
+        this.crit = monster.getCrit();
+        this.maxHp = monster.getMaxHp();
+        this.speed = monster.getSpeed();
+        this.currentHp = maxHp;
+        this.armor = monster.getAmor();
+        this.weapon = monster.getWeapon();
+        this.jewlery = monster.getJewlery();
+        this.id = idCount;
+        idCount++;
+    }
+
+    public Weapon getWeapon() {
+        return weapon;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public Jewlery getJewlery() {
+        return jewlery;
     }
 
     public String getName() {
@@ -86,7 +116,7 @@ public class Monster {
 
         if(!doesTargetDodge(targetMonster, seed)) {
             Text.attackMsg(this,targetMonster,damage);
-            int damageToTarget = deltDamage(targetMonster, seed);
+            int damageToTarget = combatAttackCalculation(targetMonster, seed);
             if (damageToTarget <= 0) damageToTarget = 0;
 
 
@@ -99,7 +129,7 @@ public class Monster {
 
     }
 
-    private int deltDamage(Monster targetMonster, Long seed) {
+    private int combatAttackCalculation(Monster targetMonster, Long seed) {
         return (this.calculateTotalDamage() * critMultiplier(seed)) - targetMonster.calculateTotalDefense();
 
     }

@@ -2,6 +2,7 @@ package GameLoop;
 import Units.Team;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Game {
     private ArrayList<Round> rounds;
@@ -18,9 +19,10 @@ public class Game {
 
 
     public Game startGame(Team teamOne, Team teamTwo) {
+        Random random = new Random();
         while(teamOne.getHp() > 0 && teamTwo.getHp() > 0 ) {
             Round round = new Round();
-            rounds.add(round.fightLoop(teamOne,teamTwo, 10L));
+            rounds.add(round.fightLoop(teamOne,teamTwo, random.nextLong() ));
         }
         if(teamOne.getHp() > 0) {
             winner = teamOne;

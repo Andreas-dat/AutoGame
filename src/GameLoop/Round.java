@@ -57,7 +57,7 @@ public class Round {
 
 
     public Round endRound(Monster winner, Team teamOne, Team teamTwo) {
-        if (teamTwo.getCurrentMonster().getName().equals(winner.getName())) {
+        if (teamTwo.getCurrentMonster().getId() == winner.getId()) {
             teamOne.loseRound(10); //TODO: Make algorithm for how much health a team should loose
         } else {
             teamTwo.loseRound(10);
@@ -75,8 +75,8 @@ public class Round {
         }
         if (monsterOne.getSpeed() == monsterTwo.getSpeed()) {
 
-            int randomStarter = random.nextInt(2) + 1;
-            if (2 == randomStarter) {
+            int randomStarter = random.nextInt(2) ;
+            if (1 == randomStarter) {
                 monsterArray[0] = monsterOne;
                 monsterArray[1] = monsterTwo;
                 return monsterArray;
