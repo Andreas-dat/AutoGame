@@ -47,7 +47,7 @@ class TurnTest {
     }
     @Test
     void dmg() {
-        int damage = orc.dealDmg(10L);
+        int damage = orc.attack(human, 10L);
         int normal = orc.getDamage() * 2;
 
         assertEquals(damage, normal);
@@ -56,8 +56,7 @@ class TurnTest {
 
     @Test
     void takeDamage() {
-        int damage = orc.dealDmg(10L);
-        orc.attack(human, damage,10L);
+        int damage = orc.attack(human, 10L);
 
         assertEquals(human.getHp() - damage, human.getCurrentHp());
 

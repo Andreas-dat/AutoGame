@@ -30,12 +30,12 @@ public class Turn {
 
     protected static Turn turn(Monster attacker, Monster defender, Long turnSeed, int turnNumber) {
         Text.combatText(attacker, defender);
-        int damage = attacker.dealDmg(turnSeed);
-        attacker.attack(defender, damage,turnSeed);
-        if(damage > attacker.getDamage()) {
+        int damageDone = attacker.attack(defender, turnSeed);
+
+        if(attacker.didMonsterCrit(turnSeed) > 1) {
             hasCrit = true;
         }
-        return new Turn(attacker,defender,damage,defender.getHp(), hasCrit, turnNumber);
+        return new Turn(attacker,defender,damageDone,defender.getHp(), hasCrit, turnNumber);
     }
 
 }

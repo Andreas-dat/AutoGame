@@ -10,12 +10,12 @@ import java.util.Random;
 
 
 public class Monster {
-    private String name;
-    private int maxHp;
+    private final String name;
+    private final int maxHp;
     private int currentHp;
-    private int damage;
-    private int crit;
-    private int speed;
+    private final int damage;
+    private final int crit;
+    private final int speed;
     private int dodge;
 
     private Amor amor;
@@ -55,16 +55,15 @@ public class Monster {
         return speed;
     }
 
-    public int dealDmg(Long seed) {
+    public int didMonsterCrit(Long seed) {
         Random random = new Random(seed);
         int crit = calculateTotalCrit();
-        int damage = calculateTotalDamage();
 
         int roll = random.nextInt(10) + 1;
         if(crit >= roll) {
-            return damage * 2;
+            return 2; //TODO: Should be critDamage in the future modifier etc
         }
-        return damage;
+        return 1;
     }
 
     public int calculateTotalCrit() {
@@ -76,32 +75,33 @@ public class Monster {
     }
 
     public boolean hasWonVs(Monster b) {
-        if (b.currentHp <= 0) {
-            return true;
-        }
-        return false;
+        return b.currentHp <= 0;
     }
 
-    public void attack(Monster targetMonster, int damage, Long seed) {
+    public int attack(Monster targetMonster, Long seed) {
 
         if(!doesTargetDodge(targetMonster, seed)) {
-            int defense = targetMonster.calculateTotalDefense();
             Text.attackMsg(this,targetMonster,damage);
+            int damageToTarget = deltDamage(targetMonster, seed);
 
-            targetMonster.currentHp -= damage - defense;
-            return;
+            targetMonster.currentHp -= damageToTarget;
+
+            return damageToTarget;
         }
         Text.dodgeMsg(this,targetMonster);
+        return 0;
+
+    }
+
+    public int deltDamage(Monster targetMonster, Long seed) {
+        return (damage * didMonsterCrit(seed)) - targetMonster.calculateTotalDefense();
 
     }
 
     public boolean doesTargetDodge(Monster targetMonster, Long seed) {
         Random random = new Random(seed + 1); //This is to make sure the random numbers arent the same for crit and doge
         int roll = random.nextInt(10) + 1;
-        if(targetMonster.calculateTotalDodge() >= roll) {
-            return true;
-        }
-        return false;
+        return targetMonster.calculateTotalDodge() >= roll;
 
     }
 
