@@ -40,7 +40,7 @@ class TurnTest {
 
     @Test
     void turn() {
-        int hp = human.getHp();
+        int hp = human.getMaxHp();
         Turn.turn(orc,human,10L,4);
 
         assertNotEquals(hp,human.getCurrentHp());
@@ -58,7 +58,7 @@ class TurnTest {
     void takeDamage() {
         int damage = orc.attack(human, 10L);
 
-        assertEquals(human.getHp() - damage, human.getCurrentHp());
+        assertEquals(human.getMaxHp() - damage, human.getCurrentHp());
 
     }
 

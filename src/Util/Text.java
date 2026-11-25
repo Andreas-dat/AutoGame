@@ -9,8 +9,8 @@ public class Text {
     }
 
     public static void showStatus(Monster a, Monster b) {
-        System.out.println("Name: " + a.getName() + " Hp: " + a.getHp());
-        System.out.println("Name: " + b.getName() + " Hp: " + b.getHp());
+        System.out.println("Name: " + a.getName() + " Hp: " + a.getMaxHp());
+        System.out.println("Name: " + b.getName() + " Hp: " + b.getMaxHp());
     }
 
     public static void attackMsg(Monster attacker, Monster targetMonster, int damage) {

@@ -3,8 +3,6 @@ package GameLoop;
 import Units.Monster;
 import Util.Text;
 
-import java.util.ArrayList;
-
 public class Turn {
     private Monster attacker;
     private Monster defender;
@@ -35,7 +33,7 @@ public class Turn {
         if(attacker.didMonsterCrit(turnSeed) > 1) {
             hasCrit = true;
         }
-        return new Turn(attacker,defender,damageDone,defender.getHp(), hasCrit, turnNumber);
+        return new Turn(attacker,defender,damageDone,defender.getMaxHp(), hasCrit, turnNumber);
     }
 
 }

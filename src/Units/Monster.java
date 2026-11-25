@@ -39,7 +39,7 @@ public class Monster {
         return name;
     }
 
-    public int getHp() {
+    public int getMaxHp() {
         return maxHp;
     }
 
@@ -55,7 +55,7 @@ public class Monster {
         return speed;
     }
 
-    public int didMonsterCrit(Long seed) {
+    private int critMultiplier(Long seed) {
         Random random = new Random(seed);
         int crit = calculateTotalCrit();
 
@@ -83,6 +83,7 @@ public class Monster {
         if(!doesTargetDodge(targetMonster, seed)) {
             Text.attackMsg(this,targetMonster,damage);
             int damageToTarget = deltDamage(targetMonster, seed);
+            if (damageToTarget <= 0) damageToTarget = 0;
 
             targetMonster.currentHp -= damageToTarget;
 
@@ -93,12 +94,12 @@ public class Monster {
 
     }
 
-    public int deltDamage(Monster targetMonster, Long seed) {
-        return (damage * didMonsterCrit(seed)) - targetMonster.calculateTotalDefense();
+    private int deltDamage(Monster targetMonster, Long seed) {
+        return (this.calculateTotalDamage() * critMultiplier(seed)) - targetMonster.calculateTotalDefense();
 
     }
 
-    public boolean doesTargetDodge(Monster targetMonster, Long seed) {
+    private boolean doesTargetDodge(Monster targetMonster, Long seed) {
         Random random = new Random(seed + 1); //This is to make sure the random numbers arent the same for crit and doge
         int roll = random.nextInt(10) + 1;
         return targetMonster.calculateTotalDodge() >= roll;

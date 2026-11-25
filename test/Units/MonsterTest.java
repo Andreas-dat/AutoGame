@@ -70,9 +70,9 @@ class MonsterTest {
             @Test
             void dodgeCalculations() {
                 orc.setJewlery(jewleryMap.get(1));
-                int expectedHealth = orc.getHp();
+                int expectedHealth = orc.getMaxHp();
                 human.attack(orc,10L);
-                int actualHealth = orc.getHp();
+                int actualHealth = orc.getMaxHp();
 
                 assertEquals(expectedHealth, actualHealth);
 
