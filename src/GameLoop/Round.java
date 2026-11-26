@@ -59,10 +59,12 @@ public class Round {
 
 
     public Round endRound(Monster winner, Team teamOne, Team teamTwo) {
+        int damageTeamTakes = winner.getCurrentHp() / 3;
+
         if (teamTwo.getCurrentMonster().getId() == winner.getId()) {
-            teamOne.loseRound(10); //TODO: Make algorithm for how much health a team should loose
+            teamOne.loseRound(damageTeamTakes); //TODO: Make algorithm for how much health a team should loose
         } else {
-            teamTwo.loseRound(10);
+            teamTwo.loseRound(damageTeamTakes);
         }
         return new Round(winner, turnLog);
     }

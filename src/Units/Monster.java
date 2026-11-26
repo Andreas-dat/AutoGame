@@ -13,12 +13,15 @@ public class Monster {
     private final String name;
     private final int maxHp;
     private int currentHp;
-    private final int damage;
+    private int baseDamage;
+    private int damage;
     private final int crit;
     private final int speed;
     private int dodge;
+    private int defense;
     private int id;
     private static int idCount;
+
 
     private Armor armor;
     private Weapon weapon;
@@ -105,7 +108,7 @@ public class Monster {
     }
 
     public int calculateTotalDamage() {
-        return weapon.getAttack() + this.damage;
+        return weapon.getAttack() + this.baseDamage;
     }
 
     public boolean winVs(Monster b) {
@@ -130,7 +133,7 @@ public class Monster {
     }
 
     private int combatAttackCalculation(Monster targetMonster, Long seed) {
-        return (this.calculateTotalDamage() * critMultiplier(seed)) - targetMonster.calculateTotalDefense();
+        return (this.damage * critMultiplier(seed)) - targetMonster.calculateTotalDefense();
 
     }
 
@@ -163,10 +166,13 @@ public class Monster {
 
     public void setAmor(Armor armor) {
         this.armor = armor;
+        defense = calculateTotalDefense();
+
     }
 
     public void setWeapon(Weapon weapon) {
         this.weapon = weapon;
+        this.damage = calculateTotalDamage();
     }
 
     public void setJewlery(Jewlery jewlery) {
